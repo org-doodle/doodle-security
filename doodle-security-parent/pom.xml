@@ -13,8 +13,20 @@
   <artifactId>doodle-security-parent</artifactId>
   <packaging>pom</packaging>
   <properties>
+    <doodle-boot.version>0.0.1-SNAPSHOT</doodle-boot.version>
     <spotless.license-header.file>
       ${project.basedir}/../src/checkstyle/license-header.txt
     </spotless.license-header.file>
   </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-boot-dependencies</artifactId>
+        <version>${doodle-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>

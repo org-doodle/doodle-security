@@ -8,18 +8,11 @@
     <groupId>org.doodle</groupId>
     <artifactId>doodle-security-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>doodle-security-parent/pom.xml</relativePath>
+    <relativePath>../doodle-security-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-security</artifactId>
+  <artifactId>doodle-security-starters</artifactId>
   <packaging>pom</packaging>
-  <properties>
-    <maven.deploy.skip>true</maven.deploy.skip>
-  </properties>
   <modules>
-    <module>doodle-security-autoconfigure</module>
-    <module>doodle-security-dependencies</module>
-    <module>doodle-security-parent</module>
-    <module>doodle-security-server-core</module>
-    <module>doodle-security-starters</module>
+    <module>doodle-security-starter-server</module>
   </modules>
 </project>

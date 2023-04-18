@@ -8,18 +8,21 @@
     <groupId>org.doodle</groupId>
     <artifactId>doodle-security-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>doodle-security-parent/pom.xml</relativePath>
+    <relativePath>../doodle-security-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-security</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>doodle-security-server-core</artifactId>
   <properties>
-    <maven.deploy.skip>true</maven.deploy.skip>
+    <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
   </properties>
-  <modules>
-    <module>doodle-security-autoconfigure</module>
-    <module>doodle-security-dependencies</module>
-    <module>doodle-security-parent</module>
-    <module>doodle-security-server-core</module>
-    <module>doodle-security-starters</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-boot-core</artifactId>
+    </dependency>
+  </dependencies>
 </project>
