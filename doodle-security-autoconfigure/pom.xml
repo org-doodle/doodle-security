@@ -26,6 +26,10 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
+      <artifactId>doodle-broker-autoconfigure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
       <artifactId>doodle-security-client-core</artifactId>
       <optional>true</optional>
     </dependency>
