@@ -1,1 +1,2 @@
+org.doodle.security.autoconfigure.client.SecurityClientAutoConfiguration
 org.doodle.security.autoconfigure.server.SecurityServerAutoConfiguration

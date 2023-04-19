@@ -13,6 +13,7 @@
   <artifactId>doodle-security-starters</artifactId>
   <packaging>pom</packaging>
   <modules>
+    <module>doodle-security-starter-client</module>
     <module>doodle-security-starter-server</module>
   </modules>
 </project>

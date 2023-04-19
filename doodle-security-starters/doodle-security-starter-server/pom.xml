@@ -14,6 +14,10 @@
   <dependencies>
     <dependency>
       <groupId>org.doodle</groupId>
+      <artifactId>doodle-security-autoconfigure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
       <artifactId>doodle-security-server-core</artifactId>
     </dependency>
     <dependency>

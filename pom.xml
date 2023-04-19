@@ -17,6 +17,7 @@
   </properties>
   <modules>
     <module>doodle-security-autoconfigure</module>
+    <module>doodle-security-client-core</module>
     <module>doodle-security-dependencies</module>
     <module>doodle-security-parent</module>
     <module>doodle-security-server-core</module>
