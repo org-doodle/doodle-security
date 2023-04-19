@@ -14,6 +14,7 @@
   <packaging>pom</packaging>
   <properties>
     <doodle-boot.version>0.0.1-SNAPSHOT</doodle-boot.version>
+    <doodle-design.version>0.0.1-SNAPSHOT</doodle-design.version>
     <spotless.license-header.file>
       ${project.basedir}/../src/checkstyle/license-header.txt
     </spotless.license-header.file>
@@ -24,6 +25,13 @@
         <groupId>org.doodle</groupId>
         <artifactId>doodle-boot-dependencies</artifactId>
         <version>${doodle-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.doodle</groupId>
+        <artifactId>doodle-design-dependencies</artifactId>
+        <version>${doodle-design.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
