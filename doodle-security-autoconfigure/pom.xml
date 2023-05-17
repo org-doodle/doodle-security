@@ -38,5 +38,10 @@
       <artifactId>doodle-security-server-core</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-mongodb</artifactId>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 </project>

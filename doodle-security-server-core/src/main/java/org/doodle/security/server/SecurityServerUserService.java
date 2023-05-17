@@ -22,9 +22,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
-public class SecurityUserService implements ReactiveUserDetailsService {
+public class SecurityServerUserService implements ReactiveUserDetailsService {
 
-  private final SecurityUserRepo userRepo;
+  private final SecurityServerUserRepo userRepo;
 
   @Override
   public Mono<UserDetails> findByUsername(String username) {

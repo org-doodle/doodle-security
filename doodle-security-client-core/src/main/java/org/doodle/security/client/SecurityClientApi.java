@@ -13,15 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.doodle.security.server;
+package org.doodle.security.client;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
-import org.springframework.stereotype.Repository;
-import reactor.core.publisher.Mono;
+import org.doodle.design.security.SecurityOperation;
 
-@Repository
-public interface SecurityUserRepo extends ReactiveMongoRepository<SecurityUserEntity, ObjectId> {
-
-  Mono<SecurityUserEntity> findByUsername(String username);
-}
+public interface SecurityClientApi extends SecurityOperation {}

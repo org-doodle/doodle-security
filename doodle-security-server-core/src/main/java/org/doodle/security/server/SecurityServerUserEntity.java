@@ -28,13 +28,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Document(collection = SecurityUserEntity.COLLECTION)
-public class SecurityUserEntity implements UserDetails {
+@Document(collection = SecurityServerUserEntity.COLLECTION)
+public class SecurityServerUserEntity implements UserDetails {
   public static final String COLLECTION = "security-users";
 
   @Id ObjectId id = ObjectId.get();
@@ -46,7 +47,7 @@ public class SecurityUserEntity implements UserDetails {
 
   boolean enabled = true;
 
-  final Set<SecurityRoleEntity> authorities = new HashSet<>();
+  final Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 
   @CreatedDate LocalDateTime createdAt;
 

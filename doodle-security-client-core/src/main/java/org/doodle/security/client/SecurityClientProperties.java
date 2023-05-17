@@ -15,11 +15,23 @@
  */
 package org.doodle.security.client;
 
+import java.util.Map;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @ConfigurationProperties(prefix = SecurityClientProperties.PREFIX)
 public class SecurityClientProperties {
   public static final String PREFIX = "doodle.security.client";
+
+  Server server = new Server();
+
+  @Data
+  @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+  public static class Server {
+    Map<String, String> tags = Map.of("server-type", "security");
+  }
 }

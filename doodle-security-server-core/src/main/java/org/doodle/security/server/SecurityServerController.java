@@ -15,9 +15,19 @@
  */
 package org.doodle.security.server;
 
+import org.doodle.design.security.SecurityOperation;
+import org.doodle.design.security.UserDto;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Mono;
 
 @Controller
 @MessageMapping("security")
-public class SecurityServerController {}
+public class SecurityServerController implements SecurityOperation {
+
+  @MessageMapping("pull")
+  @Override
+  public Mono<UserDto> pull(String name) {
+    return null;
+  }
+}

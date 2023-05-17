@@ -15,17 +15,14 @@
  */
 package org.doodle.security.server;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.security.core.GrantedAuthority;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Mono;
 
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@AllArgsConstructor
-public class SecurityRoleEntity implements GrantedAuthority {
-  String authority;
+@Repository
+public interface SecurityServerUserRepo
+    extends ReactiveMongoRepository<SecurityServerUserEntity, ObjectId> {
+
+  Mono<SecurityServerUserEntity> findByUsername(String username);
 }
