@@ -16,8 +16,8 @@
 package org.doodle.security.autoconfigure.client;
 
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
-import org.doodle.broker.autoconfigure.client.BrokerClientSecurityAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
+import org.doodle.security.autoconfigure.broker.BrokerClientSecurityAutoConfiguration;
 import org.doodle.security.client.BrokerSecurityClientApi;
 import org.doodle.security.client.SecurityClientApi;
 import org.doodle.security.client.SecurityClientProperties;
