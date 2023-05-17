@@ -16,6 +16,7 @@
 package org.doodle.security.autoconfigure.server;
 
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
+import org.doodle.broker.autoconfigure.client.BrokerClientSecurityAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
 import org.doodle.security.client.SecurityClientProperties;
 import org.doodle.security.server.SecurityServerController;
@@ -29,9 +30,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.config.EnableReactiveMongoAuditing;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
+import org.springframework.security.config.annotation.rsocket.RSocketSecurity;
 
-@AutoConfiguration(after = BrokerClientAutoConfiguration.class)
-@ConditionalOnClass(SecurityClientProperties.class)
+@AutoConfiguration(
+    after = {BrokerClientAutoConfiguration.class, BrokerClientSecurityAutoConfiguration.class})
+@ConditionalOnClass({SecurityClientProperties.class, RSocketSecurity.class})
 @ConditionalOnBean(BrokerClientRSocketRequester.class)
 @EnableConfigurationProperties(SecurityClientProperties.class)
 @EnableReactiveMongoAuditing
