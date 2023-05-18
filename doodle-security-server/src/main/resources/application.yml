@@ -1,0 +1,5 @@
+doodle:
+  broker:
+    client:
+      enabled: true
+      auto-connected: true

@@ -18,10 +18,11 @@ package org.doodle.security.autoconfigure.server;
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
 import org.doodle.security.autoconfigure.broker.BrokerClientSecurityAutoConfiguration;
-import org.doodle.security.client.SecurityClientProperties;
 import org.doodle.security.server.SecurityServerController;
+import org.doodle.security.server.SecurityServerProperties;
 import org.doodle.security.server.SecurityServerUserRepo;
 import org.doodle.security.server.SecurityServerUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -34,16 +35,17 @@ import org.springframework.security.config.annotation.rsocket.RSocketSecurity;
 
 @AutoConfiguration(
     after = {BrokerClientAutoConfiguration.class, BrokerClientSecurityAutoConfiguration.class})
-@ConditionalOnClass({SecurityClientProperties.class, RSocketSecurity.class})
+@ConditionalOnClass({SecurityServerProperties.class, RSocketSecurity.class})
 @ConditionalOnBean(BrokerClientRSocketRequester.class)
-@EnableConfigurationProperties(SecurityClientProperties.class)
+@EnableConfigurationProperties(SecurityServerProperties.class)
 @EnableReactiveMongoAuditing
 @EnableReactiveMongoRepositories(basePackageClasses = SecurityServerUserRepo.class)
 public class SecurityServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public SecurityServerUserService securityServerUserService(SecurityServerUserRepo userRepo) {
+  public SecurityServerUserService securityServerUserService(
+      @Autowired(required = false) SecurityServerUserRepo userRepo) {
     return new SecurityServerUserService(userRepo);
   }
 
