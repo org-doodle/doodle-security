@@ -48,7 +48,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: org-doodle/doodle-broker
-          ref: spring_rsocket_security
           path: org-doodle/doodle-broker
       - name: Install doodle-broker
         run: ./mvnw install

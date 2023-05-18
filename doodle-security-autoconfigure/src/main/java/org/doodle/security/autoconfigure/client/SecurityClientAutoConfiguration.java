@@ -26,6 +26,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.rsocket.RSocketSecurity;
@@ -35,6 +36,7 @@ import org.springframework.security.config.annotation.rsocket.RSocketSecurity;
 @ConditionalOnClass({SecurityClientProperties.class, RSocketSecurity.class})
 @ConditionalOnBean(BrokerClientRSocketRequester.class)
 @EnableConfigurationProperties(SecurityClientProperties.class)
+@ConditionalOnProperty(prefix = SecurityClientProperties.PREFIX, name = "enabled")
 public class SecurityClientAutoConfiguration {
 
   @Bean
