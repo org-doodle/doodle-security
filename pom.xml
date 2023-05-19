@@ -20,6 +20,7 @@
     <module>doodle-security-client-core</module>
     <module>doodle-security-dependencies</module>
     <module>doodle-security-parent</module>
+    <module>doodle-security-server</module>
     <module>doodle-security-server-core</module>
     <module>doodle-security-starters</module>
   </modules>

@@ -15,12 +15,47 @@
  */
 package org.doodle.security.autoconfigure.server;
 
-import org.doodle.security.server.SecurityServerProperties;
+import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
+import org.doodle.broker.client.BrokerClientRSocketRequester;
+import org.doodle.security.autoconfigure.broker.BrokerClientSecurityAutoConfiguration;
+import org.doodle.security.server.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.config.EnableReactiveMongoAuditing;
+import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
+import org.springframework.security.config.annotation.rsocket.RSocketSecurity;
 
-@AutoConfiguration
-@ConditionalOnClass(SecurityServerProperties.class)
+@AutoConfiguration(
+    after = {BrokerClientAutoConfiguration.class, BrokerClientSecurityAutoConfiguration.class})
+@ConditionalOnClass({SecurityServerProperties.class, RSocketSecurity.class})
+@ConditionalOnBean(BrokerClientRSocketRequester.class)
 @EnableConfigurationProperties(SecurityServerProperties.class)
-public class SecurityServerAutoConfiguration {}
+@EnableReactiveMongoAuditing
+@EnableReactiveMongoRepositories(basePackageClasses = SecurityServerUserRepo.class)
+public class SecurityServerAutoConfiguration {
+
+  @Bean
+  @ConditionalOnMissingBean
+  public SecurityServerMapper securityServerMapper() {
+    return new SecurityServerMapper();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public SecurityServerUserService securityServerUserService(
+      @Autowired(required = false) SecurityServerUserRepo userRepo) {
+    return new SecurityServerUserService(userRepo);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public SecurityServerController securityServerController(
+      SecurityServerMapper mapper, SecurityServerUserService userService) {
+    return new SecurityServerController(mapper, userService);
+  }
+}

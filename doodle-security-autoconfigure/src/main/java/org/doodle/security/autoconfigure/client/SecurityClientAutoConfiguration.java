@@ -15,12 +15,40 @@
  */
 package org.doodle.security.autoconfigure.client;
 
+import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
+import org.doodle.broker.client.BrokerClientRSocketRequester;
+import org.doodle.security.autoconfigure.broker.BrokerClientSecurityAutoConfiguration;
+import org.doodle.security.client.BrokerSecurityClientApi;
+import org.doodle.security.client.SecurityClientApi;
 import org.doodle.security.client.SecurityClientProperties;
+import org.doodle.security.client.SecurityClientUserService;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.rsocket.RSocketSecurity;
 
-@AutoConfiguration
-@ConditionalOnClass(SecurityClientProperties.class)
+@AutoConfiguration(
+    after = {BrokerClientAutoConfiguration.class, BrokerClientSecurityAutoConfiguration.class})
+@ConditionalOnClass({SecurityClientProperties.class, RSocketSecurity.class})
+@ConditionalOnBean(BrokerClientRSocketRequester.class)
 @EnableConfigurationProperties(SecurityClientProperties.class)
-public class SecurityClientAutoConfiguration {}
+@ConditionalOnProperty(prefix = SecurityClientProperties.PREFIX, name = "enabled")
+public class SecurityClientAutoConfiguration {
+
+  @Bean
+  @ConditionalOnMissingBean
+  public SecurityClientApi securityClientApi(
+      BrokerClientRSocketRequester requester, SecurityClientProperties properties) {
+    return new BrokerSecurityClientApi(requester, properties);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public SecurityClientUserService securityClientUserService() {
+    return new SecurityClientUserService();
+  }
+}

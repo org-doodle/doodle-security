@@ -10,7 +10,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../doodle-security-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-security-client-core</artifactId>
+  <artifactId>doodle-security-server</artifactId>
   <properties>
     <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
   </properties>
@@ -22,21 +22,7 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
-      <artifactId>doodle-boot-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.doodle</groupId>
-      <artifactId>doodle-design-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.doodle</groupId>
-      <artifactId>doodle-broker-client-core</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-rsocket</artifactId>
-      <optional>true</optional>
+      <artifactId>doodle-security-starter-server</artifactId>
     </dependency>
   </dependencies>
 </project>
