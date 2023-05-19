@@ -48,7 +48,7 @@ public class SecurityClientAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public SecurityClientUserService securityClientUserService(SecurityClientApi clientApi) {
-    return new SecurityClientUserService(clientApi);
+  public SecurityClientUserService securityClientUserService() {
+    return new SecurityClientUserService();
   }
 }

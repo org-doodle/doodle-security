@@ -15,6 +15,8 @@
  */
 package org.doodle.security.server;
 
+import static java.lang.String.format;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +32,7 @@ public class SecurityServerUserService implements ReactiveUserDetailsService {
   public Mono<UserDetails> findByUsername(String username) {
     return this.userRepo
         .findByUsername(username)
-        .onErrorMap(error -> new UsernameNotFoundException(String.format("找不到用户: %s", username)))
+        .onErrorMap(error -> new UsernameNotFoundException(format("找不到用户: %s", username)))
         .cast(UserDetails.class);
   }
 }

@@ -15,22 +15,36 @@
  */
 package org.doodle.security.client;
 
+import static java.lang.String.format;
+
+import java.util.function.Supplier;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
-public class SecurityClientUserService implements ReactiveUserDetailsService {
-  private final SecurityClientApi clientApi;
+public class SecurityClientUserService
+    implements ReactiveUserDetailsService, ApplicationContextAware {
+  private Supplier<SecurityClientApi> clientApiSupplier;
+
+  @Override
+  public void setApplicationContext(@NonNull ApplicationContext context) throws BeansException {
+    this.clientApiSupplier = () -> context.getBean(SecurityClientApi.class);
+  }
 
   @Override
   public Mono<UserDetails> findByUsername(String username) {
-    return this.clientApi
+    return this.clientApiSupplier
+        .get()
         .pull(username)
         .map(SecurityClientUserDetails::new)
-        .onErrorMap(error -> new UsernameNotFoundException(username, error))
-        .cast(UserDetails.class);
+        .cast(UserDetails.class)
+        .onErrorMap(error -> new UsernameNotFoundException(format("找不到用户 %s", username), error));
   }
 }

@@ -21,16 +21,26 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.security.rsocket.RSocketSecurityAutoConfiguration;
+import org.springframework.boot.rsocket.messaging.RSocketStrategiesCustomizer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.rsocket.RSocketSecurity;
 import org.springframework.security.rsocket.core.PayloadSocketAcceptorInterceptor;
 import org.springframework.security.rsocket.core.SecuritySocketAcceptorInterceptor;
+import org.springframework.security.rsocket.metadata.SimpleAuthenticationEncoder;
 
 @AutoConfiguration(
     before = BrokerClientAutoConfiguration.class,
     after = RSocketSecurityAutoConfiguration.class)
 @ConditionalOnClass(RSocketSecurity.class)
+@EnableReactiveMethodSecurity
 public class BrokerClientSecurityAutoConfiguration {
+
+  @Bean
+  public RSocketStrategiesCustomizer brokerClientSecurityRSocketStrategiesCustomizer() {
+    return strategies -> strategies.encoder(new SimpleAuthenticationEncoder());
+  }
 
   @Bean
   public BrokerClientRSocketConnectorCustomizer brokerClientSecuritySocketAcceptorInterceptor(
@@ -44,6 +54,7 @@ public class BrokerClientSecurityAutoConfiguration {
       RSocketSecurity rSocketSecurity) {
     return rSocketSecurity
         .authorizePayload(authorize -> authorize.setup().permitAll().anyRequest().permitAll())
+        .simpleAuthentication(Customizer.withDefaults())
         .build();
   }
 }
