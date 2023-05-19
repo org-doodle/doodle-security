@@ -18,10 +18,7 @@ package org.doodle.security.autoconfigure.server;
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
 import org.doodle.security.autoconfigure.broker.BrokerClientSecurityAutoConfiguration;
-import org.doodle.security.server.SecurityServerController;
-import org.doodle.security.server.SecurityServerProperties;
-import org.doodle.security.server.SecurityServerUserRepo;
-import org.doodle.security.server.SecurityServerUserService;
+import org.doodle.security.server.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -44,6 +41,12 @@ public class SecurityServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
+  public SecurityServerMapper securityServerMapper() {
+    return new SecurityServerMapper();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
   public SecurityServerUserService securityServerUserService(
       @Autowired(required = false) SecurityServerUserRepo userRepo) {
     return new SecurityServerUserService(userRepo);
@@ -51,7 +54,8 @@ public class SecurityServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public SecurityServerController securityServerController(SecurityServerUserService userService) {
-    return new SecurityServerController();
+  public SecurityServerController securityServerController(
+      SecurityServerMapper mapper, SecurityServerUserService userService) {
+    return new SecurityServerController(mapper, userService);
   }
 }

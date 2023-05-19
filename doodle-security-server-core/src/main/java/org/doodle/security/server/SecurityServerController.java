@@ -15,19 +15,28 @@
  */
 package org.doodle.security.server;
 
+import lombok.RequiredArgsConstructor;
 import org.doodle.design.security.SecurityOperation;
 import org.doodle.design.security.UserDto;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Mono;
 
 @Controller
 @MessageMapping("security")
+@RequiredArgsConstructor
 public class SecurityServerController implements SecurityOperation {
+  private final SecurityServerMapper mapper;
+  private final SecurityServerUserService userService;
 
   @MessageMapping("pull")
   @Override
-  public Mono<UserDto> pull(String name) {
-    return null;
+  public Mono<UserDto> pull(String username) {
+    return this.userService
+        .findByUsername(username)
+        .cast(SecurityServerUserEntity.class)
+        .map(mapper::toProto)
+        .onErrorMap(error -> new UsernameNotFoundException(username, error));
   }
 }
