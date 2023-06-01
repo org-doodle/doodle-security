@@ -15,21 +15,22 @@
  */
 package org.doodle.security.server;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import org.doodle.boot.mongodb.MongodbDateEntity;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@SuperBuilder
+@ToString(callSuper = true)
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -42,13 +43,9 @@ public class SecurityServerUserEntity extends MongodbDateEntity<String> implemen
 
   String password;
 
-  boolean enabled = true;
+  boolean enabled;
 
   final Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-
-  @CreatedDate LocalDateTime createdAt;
-
-  @LastModifiedDate LocalDateTime modifiedAt;
 
   @Override
   public boolean isAccountNonExpired() {
