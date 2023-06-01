@@ -16,14 +16,14 @@
 package org.doodle.security.server;
 
 import java.util.stream.Collectors;
-import org.doodle.design.common.ProtoMapper;
-import org.doodle.design.security.UserDto;
+import org.doodle.design.security.SecurityMapper;
+import org.doodle.design.security.UserDetailsInfo;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-public final class SecurityServerMapper implements ProtoMapper {
+public final class SecurityServerMapper extends SecurityMapper {
 
-  public UserDto toProto(SecurityServerUserEntity userEntity) {
-    return UserDto.newBuilder()
+  public UserDetailsInfo toProto(SecurityServerUserEntity userEntity) {
+    return UserDetailsInfo.newBuilder()
         .setUsername(userEntity.getUsername())
         .setPassword(userEntity.getPassword())
         .setEnable(userEntity.isEnabled())

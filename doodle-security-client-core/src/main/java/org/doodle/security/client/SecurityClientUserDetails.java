@@ -21,7 +21,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.doodle.design.security.UserDto;
+import org.doodle.design.security.UserDetailsInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +30,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SecurityClientUserDetails implements UserDetails {
-  UserDto user;
+  UserDetailsInfo user;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

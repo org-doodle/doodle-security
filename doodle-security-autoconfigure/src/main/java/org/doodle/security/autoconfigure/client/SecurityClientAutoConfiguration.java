@@ -18,10 +18,7 @@ package org.doodle.security.autoconfigure.client;
 import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
 import org.doodle.security.autoconfigure.broker.BrokerClientSecurityAutoConfiguration;
-import org.doodle.security.client.BrokerSecurityClientApi;
-import org.doodle.security.client.SecurityClientApi;
-import org.doodle.security.client.SecurityClientProperties;
-import org.doodle.security.client.SecurityClientUserService;
+import org.doodle.security.client.*;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -41,6 +38,12 @@ public class SecurityClientAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
+  public SecurityClientMapper securityClientMapper() {
+    return new SecurityClientMapper();
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
   public SecurityClientApi securityClientApi(
       BrokerClientRSocketRequester requester, SecurityClientProperties properties) {
     return new BrokerSecurityClientApi(requester, properties);
@@ -48,7 +51,7 @@ public class SecurityClientAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public SecurityClientUserService securityClientUserService() {
-    return new SecurityClientUserService();
+  public SecurityClientUserService securityClientUserService(SecurityClientMapper mapper) {
+    return new SecurityClientUserService(mapper);
   }
 }

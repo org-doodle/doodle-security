@@ -16,10 +16,12 @@
 package org.doodle.security.server;
 
 import lombok.RequiredArgsConstructor;
+import org.doodle.design.common.Result;
+import org.doodle.design.common.util.ProtoUtils;
 import org.doodle.design.security.SecurityOperation;
-import org.doodle.design.security.UserDto;
+import org.doodle.design.security.SecurityPullReply;
+import org.doodle.design.security.SecurityPullRequest;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Mono;
 
@@ -30,13 +32,14 @@ public class SecurityServerController implements SecurityOperation {
   private final SecurityServerMapper mapper;
   private final SecurityServerUserService userService;
 
-  @MessageMapping("pull")
   @Override
-  public Mono<UserDto> pull(String username) {
-    return this.userService
-        .findByUsername(username)
+  public Mono<SecurityPullReply> pull(SecurityPullRequest request) {
+    return Mono.just(request)
+        .map(SecurityPullRequest::getUsername)
+        .flatMap(userService::findByUsername)
         .cast(SecurityServerUserEntity.class)
         .map(mapper::toProto)
-        .onErrorMap(error -> new UsernameNotFoundException(username, error));
+        .map(mapper::toReply)
+        .onErrorReturn(mapper.toError(ProtoUtils.toProto(Result.bad())));
   }
 }

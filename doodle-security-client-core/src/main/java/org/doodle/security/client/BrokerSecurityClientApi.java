@@ -19,7 +19,8 @@ import org.doodle.broker.client.BrokerClientRSocketRequester;
 import org.doodle.design.broker.frame.BrokerFrame;
 import org.doodle.design.broker.frame.BrokerFrameMimeTypes;
 import org.doodle.design.broker.frame.BrokerFrameUtils;
-import org.doodle.design.security.UserDto;
+import org.doodle.design.security.SecurityPullReply;
+import org.doodle.design.security.SecurityPullRequest;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import reactor.core.publisher.Mono;
 
@@ -34,8 +35,8 @@ public class BrokerSecurityClientApi implements SecurityClientApi {
   }
 
   @Override
-  public Mono<UserDto> pull(String username) {
-    return route("security.pull").data(username).retrieveMono(UserDto.class);
+  public Mono<SecurityPullReply> pull(SecurityPullRequest request) {
+    return route("security.pull").data(request).retrieveMono(SecurityPullReply.class);
   }
 
   protected RSocketRequester.RequestSpec route(String route) {

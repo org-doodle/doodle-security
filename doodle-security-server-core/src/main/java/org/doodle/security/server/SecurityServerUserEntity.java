@@ -22,9 +22,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import org.bson.types.ObjectId;
+import org.doodle.boot.mongodb.MongodbDateEntity;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -35,10 +34,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document(collection = SecurityServerUserEntity.COLLECTION)
-public class SecurityServerUserEntity implements UserDetails {
+public class SecurityServerUserEntity extends MongodbDateEntity<String> implements UserDetails {
   public static final String COLLECTION = "security-users";
-
-  @Id ObjectId id = ObjectId.get();
 
   @Indexed(unique = true)
   String username;

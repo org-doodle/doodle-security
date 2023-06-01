@@ -15,14 +15,30 @@
  */
 package org.doodle.security.server;
 
-import org.bson.types.ObjectId;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
 public interface SecurityServerUserRepo
-    extends ReactiveMongoRepository<SecurityServerUserEntity, ObjectId> {
+    extends UserRepoCustom, ReactiveMongoRepository<SecurityServerUserEntity, String> {}
 
+interface UserRepoCustom {
   Mono<SecurityServerUserEntity> findByUsername(String username);
+}
+
+@RequiredArgsConstructor
+class UserRepoCustomImpl implements UserRepoCustom {
+  private final ReactiveMongoTemplate mongoTemplate;
+
+  @Override
+  public Mono<SecurityServerUserEntity> findByUsername(String username) {
+    return Mono.just(Criteria.where("username").is(username))
+        .map(new Query()::addCriteria)
+        .flatMap(query -> this.mongoTemplate.findOne(query, SecurityServerUserEntity.class));
+  }
 }
