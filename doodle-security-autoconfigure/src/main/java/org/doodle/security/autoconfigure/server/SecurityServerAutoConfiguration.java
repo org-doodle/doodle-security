@@ -19,7 +19,6 @@ import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
 import org.doodle.security.autoconfigure.broker.BrokerClientSecurityAutoConfiguration;
 import org.doodle.security.server.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -47,8 +46,7 @@ public class SecurityServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public SecurityServerUserService securityServerUserService(
-      @Autowired(required = false) SecurityServerUserRepo userRepo) {
+  public SecurityServerUserService securityServerUserService(SecurityServerUserRepo userRepo) {
     return new SecurityServerUserService(userRepo);
   }
 
