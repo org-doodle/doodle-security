@@ -23,5 +23,7 @@
     <module>doodle-security-server</module>
     <module>doodle-security-server-core</module>
     <module>doodle-security-starters</module>
+    <module>doodle-security-vaadin</module>
+    <module>doodle-security-vaadin-core</module>
   </modules>
 </project>

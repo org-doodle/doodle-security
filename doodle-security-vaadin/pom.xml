@@ -10,11 +10,19 @@
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../doodle-security-parent/pom.xml</relativePath>
   </parent>
-  <artifactId>doodle-security-starters</artifactId>
-  <packaging>pom</packaging>
-  <modules>
-    <module>doodle-security-starter-client</module>
-    <module>doodle-security-starter-server</module>
-    <module>doodle-security-starter-vaadin</module>
-  </modules>
+  <artifactId>doodle-security-vaadin</artifactId>
+  <properties>
+    <spotless-maven-plugin.skip>false</spotless-maven-plugin.skip>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-security-starter-vaadin</artifactId>
+    </dependency>
+  </dependencies>
 </project>

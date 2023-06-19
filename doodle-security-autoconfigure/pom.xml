@@ -44,6 +44,11 @@
       <optional>true</optional>
     </dependency>
     <dependency>
+      <groupId>org.doodle</groupId>
+      <artifactId>doodle-security-vaadin-core</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
       <optional>true</optional>
