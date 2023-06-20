@@ -16,16 +16,34 @@
 package org.doodle.security.server.single;
 
 import lombok.extern.slf4j.Slf4j;
+import org.doodle.security.server.SecurityServerUserEntity;
+import org.doodle.security.server.SecurityServerUserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @Slf4j
 @SpringBootApplication
-public class SecurityServerApplication {
+public class SecurityServerApplication implements CommandLineRunner {
+
+  @Autowired SecurityServerUserRepo userRepo;
+
   public static void main(String[] args) {
     Thread.setDefaultUncaughtExceptionHandler(
         (t, e) -> log.error("线程({})发生未捕获异常: {}", t.getName(), e.getMessage(), e));
 
     SpringApplication.run(SecurityServerApplication.class, args);
+  }
+
+  @Override
+  public void run(String... args) throws Exception {
+    SecurityServerUserEntity userEntity =
+        SecurityServerUserEntity.builder()
+            .username("admin")
+            .password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW")
+            .enabled(true)
+            .build();
+    userRepo.save(userEntity).block();
   }
 }

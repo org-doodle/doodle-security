@@ -26,12 +26,12 @@ import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Mono;
 
 @Controller
-@MessageMapping("security")
 @RequiredArgsConstructor
 public class SecurityServerController implements SecurityOperation {
   private final SecurityServerMapper mapper;
   private final SecurityServerUserService userService;
 
+  @MessageMapping("security.pull")
   @Override
   public Mono<SecurityPullReply> pull(SecurityPullRequest request) {
     return Mono.just(request)

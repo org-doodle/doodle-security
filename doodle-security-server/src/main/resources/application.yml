@@ -3,3 +3,7 @@ doodle:
     client:
       enabled: true
       auto-connected: true
+      tags:
+        server-type: security
+      server:
+        uri: tcp://localhost:10000

@@ -26,6 +26,10 @@
     </dependency>
     <dependency>
       <groupId>org.doodle</groupId>
+      <artifactId>doodle-security-starter-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.doodle</groupId>
       <artifactId>doodle-boot-starter-vaadin</artifactId>
     </dependency>
   </dependencies>

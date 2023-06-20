@@ -3,3 +3,16 @@ server:
 
 vaadin:
   launch-browser: true
+
+doodle:
+  broker:
+    client:
+      enabled: true
+      auto-connected: true
+      tags:
+        server-type: security-vaadin
+      server:
+        uri: tcp://localhost:10000
+  security:
+    client:
+      enabled: true

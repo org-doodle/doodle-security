@@ -17,15 +17,11 @@ package org.doodle.security.server;
 
 import java.util.HashSet;
 import java.util.Set;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.doodle.boot.mongodb.MongodbDateEntity;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -35,17 +31,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document(collection = SecurityServerUserEntity.COLLECTION)
-public class SecurityServerUserEntity extends MongodbDateEntity<String> implements UserDetails {
+@NoArgsConstructor
+@AllArgsConstructor
+public class SecurityServerUserEntity implements UserDetails {
   public static final String COLLECTION = "security-users";
 
-  @Indexed(unique = true)
-  String username;
+  @MongoId String username;
 
   String password;
 
   boolean enabled;
 
-  final Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+  Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 
   @Override
   public boolean isAccountNonExpired() {

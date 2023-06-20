@@ -22,11 +22,12 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import reactor.core.publisher.Mono;
 
 public class SecurityClientUserService
-    implements ReactiveUserDetailsService, ApplicationContextAware {
+    implements ReactiveUserDetailsService, UserDetailsService, ApplicationContextAware {
   private final SecurityClientMapper mapper;
   private Supplier<SecurityClientApi> clientApiSupplier;
 
@@ -37,6 +38,11 @@ public class SecurityClientUserService
   @Override
   public void setApplicationContext(@NonNull ApplicationContext context) throws BeansException {
     this.clientApiSupplier = () -> context.getBean(SecurityClientApi.class);
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    return findByUsername(username).block();
   }
 
   @Override
