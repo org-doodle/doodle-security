@@ -24,11 +24,11 @@ import org.doodle.design.security.SecurityPullRequest;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import reactor.core.publisher.Mono;
 
-public class BrokerSecurityClientApi implements SecurityClientApi {
+public class BrokerSecurityClientImpl implements SecurityClient {
   private final BrokerClientRSocketRequester requester;
   private final BrokerFrame brokerFrame;
 
-  public BrokerSecurityClientApi(
+  public BrokerSecurityClientImpl(
       BrokerClientRSocketRequester requester, SecurityClientProperties properties) {
     this.requester = requester;
     this.brokerFrame = BrokerFrameUtils.unicast(properties.getServer().getTags());

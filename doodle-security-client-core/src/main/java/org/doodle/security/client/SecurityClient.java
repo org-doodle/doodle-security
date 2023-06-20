@@ -17,4 +17,4 @@ package org.doodle.security.client;
 
 import org.doodle.design.security.SecurityOperation;
 
-public interface SecurityClientApi extends SecurityOperation {}
+public interface SecurityClient extends SecurityOperation {}

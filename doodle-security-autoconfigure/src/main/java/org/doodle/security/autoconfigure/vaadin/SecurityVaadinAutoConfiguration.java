@@ -15,6 +15,7 @@
  */
 package org.doodle.security.autoconfigure.vaadin;
 
+import org.doodle.boot.vaadin.EnableVaadin;
 import org.doodle.security.vaadin.SecurityVaadinProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -23,4 +24,5 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @AutoConfiguration
 @ConditionalOnClass(SecurityVaadinProperties.class)
 @EnableConfigurationProperties(SecurityVaadinProperties.class)
+@EnableVaadin("org.doodle.security.vaadin.views")
 public class SecurityVaadinAutoConfiguration {}

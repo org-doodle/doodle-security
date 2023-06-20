@@ -30,7 +30,7 @@ import reactor.core.publisher.Mono;
 public class SecurityClientUserService
     implements ReactiveUserDetailsService, UserDetailsService, ApplicationContextAware {
   private final SecurityClientMapper mapper;
-  private Supplier<SecurityClientApi> clientApiSupplier;
+  private Supplier<SecurityClient> clientApiSupplier;
 
   public SecurityClientUserService(SecurityClientMapper mapper) {
     this.mapper = mapper;
@@ -38,7 +38,7 @@ public class SecurityClientUserService
 
   @Override
   public void setApplicationContext(@NonNull ApplicationContext context) throws BeansException {
-    this.clientApiSupplier = () -> context.getBean(SecurityClientApi.class);
+    this.clientApiSupplier = () -> context.getBean(SecurityClient.class);
   }
 
   @Override
