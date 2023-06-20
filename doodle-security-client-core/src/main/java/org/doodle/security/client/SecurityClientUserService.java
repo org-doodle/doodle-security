@@ -15,6 +15,7 @@
  */
 package org.doodle.security.client;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -42,7 +43,15 @@ public class SecurityClientUserService
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return findByUsername(username).block();
+    try {
+      UserDetails userDetails = findByUsername(username).block();
+      if (Objects.isNull(userDetails)) {
+        throw new UsernameNotFoundException(username);
+      }
+      return userDetails;
+    } catch (Exception e) {
+      throw new UsernameNotFoundException(username, e);
+    }
   }
 
   @Override

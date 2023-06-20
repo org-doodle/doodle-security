@@ -34,7 +34,6 @@ public class SecurityServerUserService implements ReactiveUserDetailsService {
   public Mono<UserDetails> findByUsername(String username) {
     return this.userRepo
         .findById(username)
-        .doOnNext(user -> log.info("{}", user))
         .cast(UserDetails.class)
         .doOnError(error -> log.error("发生未知错误", error))
         .onErrorMap(error -> new UsernameNotFoundException(format("找不到用户: %s", username), error));
