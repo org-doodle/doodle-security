@@ -25,4 +25,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = SecurityVaadinProperties.PREFIX)
 public class SecurityVaadinProperties {
   public static final String PREFIX = "doodle.security.vaadin";
+
+  public static final String PREFIX_VIEWS = "org.doodle.security.vaadin.views";
 }

@@ -21,7 +21,7 @@ import org.doodle.broker.autoconfigure.client.BrokerClientAutoConfiguration;
 import org.doodle.broker.client.BrokerClientRSocketRequester;
 import org.doodle.security.autoconfigure.broker.BrokerClientSecurityAutoConfiguration;
 import org.doodle.security.client.*;
-import org.doodle.security.vaadin.views.SecurityView;
+import org.doodle.security.vaadin.views.SecurityVaadinUsersView;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -60,6 +60,6 @@ public class SecurityClientAutoConfiguration {
 
   @Bean
   public ComponentSupplier securityComponentSupplier() {
-    return (authenticationContext) -> new RouterLink("权限管理", SecurityView.class);
+    return (authenticationContext) -> new RouterLink("权限管理", SecurityVaadinUsersView.class);
   }
 }

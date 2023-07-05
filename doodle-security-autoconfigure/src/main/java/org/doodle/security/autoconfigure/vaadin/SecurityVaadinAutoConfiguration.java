@@ -24,5 +24,5 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @AutoConfiguration
 @ConditionalOnClass(SecurityVaadinProperties.class)
 @EnableConfigurationProperties(SecurityVaadinProperties.class)
-@EnableVaadin("org.doodle.security.vaadin.views")
+@EnableVaadin(SecurityVaadinProperties.PREFIX_VIEWS)
 public class SecurityVaadinAutoConfiguration {}

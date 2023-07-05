@@ -18,20 +18,13 @@ package org.doodle.security.vaadin.views;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.doodle.boot.vaadin.views.MainLayout;
-import org.doodle.security.client.SecurityClient;
 
-@PermitAll
-@Route(value = "security", layout = MainLayout.class)
-@PageTitle("Doodle | Security")
+@RolesAllowed("SECURITY_ADMIN")
+@Route(value = "security-users", layout = MainLayout.class)
+@PageTitle("Security | Users")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class SecurityView extends VerticalLayout {
-  SecurityClient securityClient;
-
-  public SecurityView(SecurityClient securityClient) {
-    this.securityClient = securityClient;
-  }
-}
+public class SecurityVaadinUsersView extends VerticalLayout {}
