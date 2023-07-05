@@ -15,11 +15,18 @@
  */
 package org.doodle.security.server;
 
+import java.util.LinkedList;
+import java.util.List;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @ConfigurationProperties(prefix = SecurityServerProperties.PREFIX)
 public class SecurityServerProperties {
   public static final String PREFIX = "doodle.security.server";
+
+  List<SecurityServerUserEntity> initUsers = new LinkedList<>();
 }

@@ -19,16 +19,25 @@ import static java.lang.String.format;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Mono;
 
 @Slf4j
 @RequiredArgsConstructor
-public class SecurityServerUserService implements ReactiveUserDetailsService {
-
+public class SecurityServerUserService implements ReactiveUserDetailsService, InitializingBean {
   private final SecurityServerUserRepo userRepo;
+  private final SecurityServerProperties properties;
+
+  @Override
+  public void afterPropertiesSet() throws Exception {
+    if (!CollectionUtils.isEmpty(properties.getInitUsers())) {
+      userRepo.saveAll(properties.getInitUsers()).subscribe(user -> log.info("创建用户: {}", user));
+    }
+  }
 
   @Override
   public Mono<UserDetails> findByUsername(String username) {

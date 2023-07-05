@@ -46,8 +46,9 @@ public class SecurityServerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public SecurityServerUserService securityServerUserService(SecurityServerUserRepo userRepo) {
-    return new SecurityServerUserService(userRepo);
+  public SecurityServerUserService securityServerUserService(
+      SecurityServerUserRepo userRepo, SecurityServerProperties properties) {
+    return new SecurityServerUserService(userRepo, properties);
   }
 
   @Bean
