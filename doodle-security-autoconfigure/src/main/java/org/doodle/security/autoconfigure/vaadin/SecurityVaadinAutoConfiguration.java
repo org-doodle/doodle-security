@@ -15,14 +15,26 @@
  */
 package org.doodle.security.autoconfigure.vaadin;
 
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.router.RouterLink;
 import org.doodle.boot.vaadin.EnableVaadin;
+import org.doodle.boot.vaadin.views.TabSupplier;
 import org.doodle.security.vaadin.SecurityVaadinProperties;
+import org.doodle.security.vaadin.views.SecurityVaadinUsersView;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 
 @AutoConfiguration
 @ConditionalOnClass(SecurityVaadinProperties.class)
 @EnableConfigurationProperties(SecurityVaadinProperties.class)
 @EnableVaadin(SecurityVaadinProperties.PREFIX_VIEWS)
-public class SecurityVaadinAutoConfiguration {}
+public class SecurityVaadinAutoConfiguration {
+  @Bean
+  public TabSupplier securityUsersTabView() {
+    return (authenticationContext) ->
+        new Tab(VaadinIcon.USERS.create(), new RouterLink("权限中心", SecurityVaadinUsersView.class));
+  }
+}
